@@ -18,7 +18,6 @@ scala> Primo(3)
 res28: Boolean = false
 
 ///2 
-///checar50/50
 def lista(list:List[Int]): String ={
     for(n <- list){
         if(n%2==0){
