@@ -23,3 +23,4 @@ df2.show()
 df2.na.fill("Missing name", Array("Name")).show()
 df2.na.fill("19/01/2019",Array("Date")).show()
 val df3=df2.na.fill("No Name", Array("Name")).show()
+
