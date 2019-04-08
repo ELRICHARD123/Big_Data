@@ -60,8 +60,9 @@ val predic = reslt.select("pred", "labels")
 val evaluator = new MulticlassClassificationEvaluator().setLabelCol("labels").setPredictionCol("pred").setMetricName("accuracy")
 val accuracy = evaluator.evaluate(predic)
 //imprimimos la precicion y error  
-println("Test set accuracy = " + accuracy)
-println("Test Error = " + (1.0 - accuracy))
+val x =(100*accuracy)
+println("Test set accuracy = " + (100*accuracy))
+println("Test Error = " +(100-(100* accuracy)))
 
 
 
