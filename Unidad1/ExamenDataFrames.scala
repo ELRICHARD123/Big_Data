@@ -14,7 +14,7 @@ for(row <- df.head(5)){
 //6
 df.describe().show()
 //7
-val df1=df.withColumn("HV Ratio",df("High")+df("Volume"))
+val df1=df.withColumn("HV Ratio",df("High")/df("Volume"))
 //8
 df.orderBy($"High".desc).show()
 //9
@@ -41,3 +41,4 @@ df.select(min($"Volume")).show()
    dfmean.orderBy($"Month".desc).show()
    dfmean.orderBy($"Month").show()
  
+:load nombredelarchio.scala
