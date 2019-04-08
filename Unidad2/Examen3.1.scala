@@ -7,6 +7,7 @@ Logger.getLogger("org").setLevel(Level.ERROR)
 val spark = SparkSession.builder().getOrCreate()
 val df = spark.read.option("header","true").option("inferSchema", "true").format("csv").load("Iris.csv")
 df.show()
+
 //checamos los tipos de datos que contienel csv
 df.printSchema()
 import org.apache.spark.sql.types._
