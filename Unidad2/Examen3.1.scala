@@ -11,7 +11,7 @@ df.show()
 //checamos los tipos de datos que contienel csv
 df.printSchema()
 import org.apache.spark.sql.types._
-// 
+// le damos una estructura alos datos que usaremos 
 val struct =
    StructType(
      StructField("SL", DoubleType, true) ::
@@ -37,8 +37,8 @@ val VectAs = (new VectorAssembler().setInputCols(Array("SL","SW", "PL","PW")).se
 
 val Array(training, test) = df1.randomSplit(Array(0.6, 0.4), seed = 1234L)
 import org.apache.spark.ml.Pipeline
-// capas de neuronas 
-val layers = Array[Int](3, 2, 3, 3)
+// capas de neuronas las primeras son las features y las ultimas 3 son las claes de salida
+val layers = Array[Int](4, 5, 5, 3)
 
 //val trainer = new MultilayerPerceptronClassifier().setLayers(layers).setFeaturesCol("features").setBlockSize(128).setSeed(1234L).setMaxIter(100)
 val multiPerc= new MultilayerPerceptronClassifier().setLayers(layers).setLabelCol("labels").setFeaturesCol("features").setPredictionCol("pred").setBlockSize(128).setSeed(1234L).setMaxIter(100)
@@ -58,8 +58,10 @@ reslt.select("pred", "labels")
 //
 val predic = reslt.select("pred", "labels")
 val evaluator = new MulticlassClassificationEvaluator().setLabelCol("labels").setPredictionCol("pred").setMetricName("accuracy")
+val accuracy = evaluator.evaluate(predic)
+println("Test set accuracy = " + accuracy)
+println("Test Error = " + (1.0 - accuracy))
 
-println("Test set accuracy = " + evaluator.evaluate(predic))
 
 
 
