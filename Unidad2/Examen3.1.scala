@@ -21,6 +21,7 @@ val struct =
      StructField("Iris-setosa", StringType, true) :: Nil)
 
 
+val df1 = spark.read.option("header","false").schema(struct).load("Iris.csv")
 import org.apache.spark.ml.feature.{VectorAssembler, StringIndexer}
 
 // Convertir strings a valores numericos
@@ -32,7 +33,7 @@ val VectAs = (new VectorAssembler().setInputCols(Array("5.1","3.5", "1.4","0.2")
 //val train = splits(0)
 //val test = splits(1)
 
-val Array(training, test) = df.randomSplit(Array(0.7, 0.3), seed = 12345)
+val Array(training, test) = df1.randomSplit(Array(0.7, 0.3), seed = 12345)
 import org.apache.spark.ml.Pipeline
 // capas de neuronas 
 val layers = Array[Int](3, 2, 3, 3)
