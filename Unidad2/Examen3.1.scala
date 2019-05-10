@@ -2,6 +2,8 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.log4j._
+//Quita muchos warnings
+// pa que no salgan los warning
 Logger.getLogger("org").setLevel(Level.ERROR)
 //cargamos el csv
 val spark = SparkSession.builder().getOrCreate()
@@ -10,6 +12,7 @@ df.show()
 
 //checamos los tipos de datos que contienel csv
 df.printSchema()
+
 import org.apache.spark.sql.types._
 // le damos una estructura alos datos que usaremos 
 val struct =
@@ -35,7 +38,7 @@ val VectAs = (new VectorAssembler().setInputCols(Array("SL","SW", "PL","PW")).se
 //val train = splits(0)
 //val test = splits(1)
 
-val Array(training, test) = df1.randomSplit(Array(0.6, 0.4), seed = 1234L)
+val Array(training, test) = df1.randomSplit(Array(0.5, 0.5), seed = 1234L)
 import org.apache.spark.ml.Pipeline
 // capas de neuronas las primeras son las features y las ultimas 3 son las claes de salida
 val layers = Array[Int](4, 5, 5, 3)
@@ -60,7 +63,6 @@ val predic = reslt.select("pred", "labels")
 val evaluator = new MulticlassClassificationEvaluator().setLabelCol("labels").setPredictionCol("pred").setMetricName("accuracy")
 val accuracy = evaluator.evaluate(predic)
 //imprimimos la precicion y error  
-val x =(100*accuracy)
 println("Test set accuracy = " + (100*accuracy))
 println("Test Error = " +(100-(100* accuracy)))
 
