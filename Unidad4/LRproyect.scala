@@ -22,7 +22,7 @@ val assembler = (new VectorAssembler()
                   .setOutputCol("features"))
 
 
-val Array(training, test) = df.randomSplit(Array(0.7, 0.3), seed = 12345)
+val Array(training, test) = df.randomSplit(Array(0.5, 0.5), seed = 12345)
 
 import org.apache.spark.ml.Pipeline
 

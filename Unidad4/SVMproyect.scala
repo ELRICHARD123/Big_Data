@@ -20,7 +20,7 @@ val assembler = (new VectorAssembler()
                   .setInputCols(Array("age","balance","day","duration","campaign","pdays","previous"))
                   .setOutputCol("features"))
 
-val Array(training, test) = df.randomSplit(Array(0.7, 0.3), seed = 11L)
+val Array(training, test) = df.randomSplit(Array(0.5, 0.5), seed = 11L)
 
 import org.apache.spark.ml.classification.LinearSVC
 
@@ -35,7 +35,7 @@ val result = model.transform(test)
 
 //Probar el modelo solo se puede con la libreria vieja
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
-val predictionAndLabels = results.select($"prediction",$"label").as[(Double, Double)].rdd
+val predictionAndLabels = result.select($"prediction",$"label").as[(Double, Double)].rdd
 val metrics = new MulticlassMetrics(predictionAndLabels)
 
 // Matriz de confusion

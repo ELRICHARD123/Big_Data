@@ -25,7 +25,7 @@ val assembler = (new VectorAssembler()
 //val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("features").setMaxCategories(4).fit(df)
 
 // Split the data into training and test sets (70% held out for testing).
-val Array(trainingData, testData) = df.randomSplit(Array(0.7, 0.3))
+val Array(trainingData, testData) = df.randomSplit(Array(0.5, 0.5))
 
 // entrenamos el moddelo.
 val dt = new DecisionTreeClassifier().setLabelCol("label").setFeaturesCol("features")
@@ -34,7 +34,7 @@ val dt = new DecisionTreeClassifier().setLabelCol("label").setFeaturesCol("featu
   dt.setFeaturesCol("features")
 
 // Convert indexed labels back to original labels.
-val labelConverter = new IndexToString().setInputCol("prediction").setOutputCol("predictedLabel").setLabels(labelIndexer.label)
+val labelConverter = new IndexToString().setInputCol("prediction").setOutputCol("predictedLabel").setLabels(labelIndexer.labels)
 
 // Chain indexers and tree in a Pipeline.
 val pipeline = new Pipeline().setStages(Array(labelIndexer, assembler, dt, labelConverter))
